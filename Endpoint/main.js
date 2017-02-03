@@ -21,6 +21,11 @@ var app             = express();
 var server          = app.listen(8080);
 var wsServer        = new WebSocketServer({ httpServer : server });
 
+// https://github.com/Azure/azure-event-hubs-node/issues/16#issuecomment-277009617
+process.on('uncaughtException', err => {
+	console.log('Caught exception: ', err);
+});
+
 app.use(express.static(__dirname + '/static')); // for static files
 
 function originIsAllowed(origin) { // TODO: put logic here to detect whether the specified origin is allowed. 
